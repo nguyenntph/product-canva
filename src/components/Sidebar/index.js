@@ -2,13 +2,10 @@ import React from "react";
 import Header from "./Header";
 import ElementList from "./ElementList";
 
-const Sidebar = ({ switchConversation, currentElement }) => (
-  <div className="h-full px-3">
+const Sidebar = ({ dragUrl }) => (
+  <div className="h-full px-3 flex flex-col">
     <Header />
-    <ElementList
-      switchConversation={switchConversation}
-      currentElement={currentElement}
-    />
+    <ElementList dragUrl={dragUrl} />
   </div>
 );
 

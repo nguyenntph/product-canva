@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useRef } from "react";
 import Sidebar from "../Sidebar";
 import Canvas from "../Canvas";
 
-const App = () => (
-  <div className="flex h-screen overflow-hidden">
-    <div className="w-1/6 border-r">
-      <Sidebar />
+const App = () => {
+  const dragUrl = useRef();
+
+  return (
+    <div className="flex h-screen overflow-hidden">
+      <div className="w-1/6 border-r">
+        <Sidebar dragUrl={dragUrl} />
+      </div>
+      <div className="w-5/6 bg-black h-screen">
+        <Canvas dragUrl={dragUrl} />
+      </div>
     </div>
-    <div className="w-5/6">
-      <Canvas />
-    </div>
-  </div>
-);
+  );
+};
 
 export default App;
