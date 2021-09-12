@@ -1,19 +1,33 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Header from './components/Header'
-import './styles/index.scss'
+import App from "./components/App";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faEdit,
+  faVideo,
+  faCog,
+  faPhone,
+  faInfoCircle,
+  faChild,
+  faAngleRight,
+  faPlus,
+  faPaperPlane,
+  faFile
+} from "@fortawesome/free-solid-svg-icons";
 
-class HelloMessage extends React.Component {
-    render() {
-        return <div>
-            <Header/>
-            <div className="container">
-                <h1>Hello {this.props.name}</h1>
-            </div>
-        </div>
-    }
-}
+library.add(
+  faEdit,
+  faVideo,
+  faCog,
+  faPhone,
+  faInfoCircle,
+  faAngleRight,
+  faChild,
+  faPlus,
+  faPaperPlane,
+  faFile
+);
 
-let App = document.getElementById("app");
+let PortfoCanva = document.getElementById("app");
 
-ReactDOM.render(<HelloMessage name="Yomi" />, App);
+ReactDOM.render(<App />, PortfoCanva);
