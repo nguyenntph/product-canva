@@ -1,38 +1,22 @@
 import React, { useState, useRef } from "react";
 import { Stage, Layer } from "react-konva";
-import URLImage from "./UrlImage";
+import Element from "./Element";
 
 const Canvas = ({ dragUrl }) => {
-  const [elements, setElements] = useState([]);
   const stageRef = useRef();
+  const [elements, setElements] = useState([]);
+  const [selectedId, selectShape] = useState(null);
 
-  const handleDragStart = e => {
-    const id = e.target.id();
-    setElements(
-      elements.map(element => {
-        return {
-          ...element,
-          isDragging: element.id === id
-        };
-      })
-    );
-  };
-  const handleDragEnd = e => {
-    setElements(
-      elements.map(element => {
-        return {
-          ...element,
-          isDragging: false
-        };
-      })
-    );
+  const checkDeselect = e => {
+    const clickedOnEmpty = e.target === e.target.getStage();
+    if (clickedOnEmpty) {
+      selectShape(null);
+    }
   };
 
   const dropNewElement = e => {
     e.preventDefault();
-    // register event position
     stageRef.current.setPointersPositions(e);
-    // add image
     setElements(
       elements.concat([
         {
@@ -57,23 +41,26 @@ const Canvas = ({ dragUrl }) => {
         height={window.innerHeight - 60}
         className="flex overflow-hidden m-10 mb-2 bg-white"
         ref={stageRef}
+        onMouseDown={checkDeselect}
+        onTouchStart={checkDeselect}
       >
         <Layer>
-          {elements.map(element => (
-            <URLImage
-              key={element.src}
-              id={element.src}
-              image={element}
-              draggable
-              shadowColor="black"
-              shadowBlur={10}
-              shadowOpacity={0.6}
-              shadowOffsetX={element.isDragging ? 10 : 5}
-              shadowOffsetY={element.isDragging ? 10 : 5}
-              scaleX={element.isDragging ? 1.2 : 1}
-              scaleY={element.isDragging ? 1.2 : 1}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
+          {elements.map((element, index) => (
+            <Element
+              key={index}
+              id={element.id}
+              element={element}
+              isSelected={index === selectedId}
+              // handleDragStart={handleDragStart}
+              // handleDragEnd={handleDragEnd}
+              onSelect={() => {
+                selectShape(index);
+              }}
+              onChange={newAttrs => {
+                const all = elements.slice();
+                all[index] = newAttrs;
+                setElements(all);
+              }}
             />
           ))}
         </Layer>
