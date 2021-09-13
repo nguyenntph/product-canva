@@ -37,7 +37,8 @@ const Canvas = ({ dragUrl }) => {
       elements.concat([
         {
           ...stageRef.current.getPointerPosition(),
-          src: dragUrl.current,
+          src: dragUrl.current.src,
+          id: dragUrl.current.id,
           isDragging: false
         }
       ])

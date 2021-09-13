@@ -6,11 +6,11 @@ const ElementList = ({ dragUrl }) => (
   <div className="overflow-y-auto h-full pt-0">
     {data.map(element => (
       <Element
-        key={element.name}
+        key={element.id}
         element={element}
         draggable="true"
         onDragStart={e => {
-          dragUrl.current = e.target.src;
+          dragUrl.current = { src: e.target.src, id: e.target.dataset.id };
         }}
       />
     ))}
