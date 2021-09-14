@@ -23,7 +23,7 @@ const Canvas = ({ dragUrl }) => {
         {
           ...stageRef.current.getPointerPosition(),
           src: dragUrl.current.src,
-          id: dragUrl.current.id,
+          id: Date.now().toString(),
           isDragging: false
         }
       ])
@@ -51,16 +51,17 @@ const Canvas = ({ dragUrl }) => {
         <Layer>
           {elements.map((element, index) => (
             <Element
-              key={index}
+              key={element.id}
               id={element.id}
               element={element}
-              isSelected={index === selectedId}
+              isSelected={element.id === selectedId}
               onSelect={() => {
-                selectShape(index);
+                selectShape(element.id);
               }}
               onChange={newAttrs => {
                 const all = elements.slice();
                 all[index] = newAttrs;
+                all.push(all.splice(index, 1)[0]);
                 setElements(all);
               }}
             />
