@@ -5,7 +5,7 @@ import useImage from "use-image";
 const Element = ({ isSelected, onSelect, onChange, element }) => {
   const shapeRef = useRef();
   const trRef = useRef();
-  const [image] = useImage(element.src);
+  const [image] = useImage(element.src, "Anonymous");
 
   useEffect(() => {
     if (isSelected) {

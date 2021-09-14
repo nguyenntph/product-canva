@@ -10,7 +10,7 @@ const App = () => {
       <div className="w-1/6 border-r">
         <Sidebar dragUrl={dragUrl} />
       </div>
-      <div className="w-5/6 bg-black h-screen">
+      <div className="w-5/6 bg-gray-600 h-screen">
         <Canvas dragUrl={dragUrl} />
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Stage, Layer } from "react-konva";
 import Element from "./Element";
+import ExportButton from "./ExportButton";
 
 const Canvas = ({ dragUrl }) => {
   const stageRef = useRef();
@@ -36,10 +37,13 @@ const Canvas = ({ dragUrl }) => {
         e.preventDefault();
       }}
     >
+      <div className="text-right px-4 pt-3">
+        <ExportButton stageRef={stageRef} />
+      </div>
       <Stage
         width={window.innerWidth}
-        height={window.innerHeight - 60}
-        className="flex overflow-hidden m-10 mb-2 bg-white"
+        height={window.innerHeight - 80}
+        className="flex overflow-hidden mx-4 my-2 bg-white"
         ref={stageRef}
         onMouseDown={checkDeselect}
         onTouchStart={checkDeselect}
@@ -51,8 +55,6 @@ const Canvas = ({ dragUrl }) => {
               id={element.id}
               element={element}
               isSelected={index === selectedId}
-              // handleDragStart={handleDragStart}
-              // handleDragEnd={handleDragEnd}
               onSelect={() => {
                 selectShape(index);
               }}
