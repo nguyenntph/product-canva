@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, Fragment } from "react";
-import { Image, Transformer, Circle, Text, Group } from "react-konva";
+import { Image } from "react-konva";
 import useImage from "use-image";
+import ElementMenu from "./ElementMenu";
 
-const Element = ({ isSelected, onSelect, onChange, element, onDelete }) => {
+const Element = ({ isSelected, onSelect, onChange, element, ...selectedProps }) => {
   const shapeRef = useRef();
   const trRef = useRef();
   const [image] = useImage(element.src, "Anonymous");
@@ -56,25 +57,7 @@ const Element = ({ isSelected, onSelect, onChange, element, onDelete }) => {
           });
         }}
       />
-      {isSelected && (
-        <>
-          <Transformer
-            ref={trRef}
-            boundBoxFunc={(oldBox, newBox) => {
-              // limit resize
-              if (newBox.width < 5 || newBox.height < 5) {
-                return oldBox;
-              }
-              return newBox;
-            }}
-          >
-            <Group onClick={onDelete}>
-              <Circle radius={10} fill="red" x={-20} y={0} />
-              <Text text="x" x={-23.5} y={-6} fill="white" fontStyle="bold" />
-            </Group>
-          </Transformer>
-        </>
-      )}
+      {isSelected && <ElementMenu transformRef={trRef} {...selectedProps} />}
     </Fragment>
   );
 };

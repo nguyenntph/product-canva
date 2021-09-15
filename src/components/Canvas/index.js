@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { Stage, Layer } from "react-konva";
 import Element from "./Element";
 import ExportButton from "./ExportButton";
+import { onDelete, goForward, goBackward } from "./helpers";
 
 const Canvas = ({ dragUrl }) => {
   const stageRef = useRef();
@@ -61,14 +62,11 @@ const Canvas = ({ dragUrl }) => {
               onChange={newAttrs => {
                 const all = elements.slice();
                 all[index] = newAttrs;
-                // all.push(all.splice(index, 1)[0]);
                 setElements(all);
               }}
-              onDelete={() => {
-                const all = elements.slice();
-                all.splice(index);
-                setElements(all);
-              }}
+              onDelete={onDelete(elements, setElements, index)}
+              goForward={goForward(elements, setElements, index)}
+              goBackward={goBackward(elements, setElements, index)}
             />
           ))}
         </Layer>
