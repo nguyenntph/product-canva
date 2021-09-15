@@ -6,7 +6,6 @@ const Element = ({ element, ...others }) => (
       <div className="flex justify-center">
         <img src={element.url} data-id={element.id} />
       </div>
-      <p className="font-semibold text-center">{element.name}</p>
     </div>
   </div>
 );
