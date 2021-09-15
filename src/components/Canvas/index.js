@@ -61,7 +61,7 @@ const Canvas = ({ dragUrl }) => {
               onChange={newAttrs => {
                 const all = elements.slice();
                 all[index] = newAttrs;
-                all.push(all.splice(index, 1)[0]);
+                // all.push(all.splice(index, 1)[0]);
                 setElements(all);
               }}
             />
