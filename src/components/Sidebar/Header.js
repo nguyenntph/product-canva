@@ -2,7 +2,7 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Header = () => (
+const Header = ({ search }) => (
   <>
     <div className="flex itesms-center justify-between p-3">
       <div className="flex items-center">
@@ -19,7 +19,7 @@ const Header = () => (
         </button>
       </div>
     </div>
-    <SearchBar />
+    <SearchBar search={search} />
   </>
 );
 

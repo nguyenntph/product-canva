@@ -2,9 +2,19 @@ import React from "react";
 import data from "../../../data/elements.json";
 import Element from "./Element";
 
-const ElementList = ({ dragUrl }) => (
+const filter = (data, term) => {
+  const filtered = data.filter(element => element.tags.includes(term));
+  if (filtered.length == 0) {
+    return data;
+  }
+  return filtered;
+};
+
+const ElementList = ({ dragUrl, term }) => (
   <div className="overflow-y-auto h-full pt-0">
-    {data.map(element => (
+    {console.log(term)}
+    {console.log(filter(data, term))}
+    {filter(data, term).map(element => (
       <Element
         key={element.id}
         element={element}
