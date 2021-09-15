@@ -12,8 +12,6 @@ const filter = (data, term) => {
 
 const ElementList = ({ dragUrl, term }) => (
   <div className="overflow-y-auto h-full pt-0">
-    {console.log(term)}
-    {console.log(filter(data, term))}
     {filter(data, term).map(element => (
       <Element
         key={element.id}
