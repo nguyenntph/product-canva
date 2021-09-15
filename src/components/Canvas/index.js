@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Stage, Layer } from "react-konva";
 import Element from "./Element";
-import ExportButton from "./ExportButton";
+import Header from "./Header";
 import { onDelete, goForward, goBackward } from "./helpers";
 
 const Canvas = ({ dragUrl }) => {
@@ -38,9 +38,7 @@ const Canvas = ({ dragUrl }) => {
         e.preventDefault();
       }}
     >
-      <div className="text-right px-4 pt-3">
-        <ExportButton stageRef={stageRef} />
-      </div>
+      <Header stageRef={stageRef} />
       <Stage
         width={window.innerWidth}
         height={window.innerHeight - 80}
