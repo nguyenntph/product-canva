@@ -64,6 +64,11 @@ const Canvas = ({ dragUrl }) => {
                 // all.push(all.splice(index, 1)[0]);
                 setElements(all);
               }}
+              onDelete={() => {
+                const all = elements.slice();
+                all.splice(index);
+                setElements(all);
+              }}
             />
           ))}
         </Layer>
