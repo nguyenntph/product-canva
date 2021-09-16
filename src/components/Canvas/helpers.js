@@ -1,6 +1,6 @@
 export const onDelete = (elements, setElements, index) => () => {
   const all = elements.slice();
-  all.splice(index);
+  all.splice(index, 1);
   setElements(all);
 };
 
