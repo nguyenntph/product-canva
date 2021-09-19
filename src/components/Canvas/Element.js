@@ -2,11 +2,20 @@ import React, { useRef, useEffect, Fragment } from "react";
 import { Image } from "react-konva";
 import useImage from "use-image";
 import ElementMenu from "./ElementMenu";
+import { scale } from "./helpers";
 
-const Element = ({ isSelected, onSelect, onChange, element, ...selectedProps }) => {
+const Element = ({
+  isSelected,
+  onSelect,
+  onChange,
+  element,
+  canvas,
+  ...selectedProps
+}) => {
   const shapeRef = useRef();
   const trRef = useRef();
   const [image] = useImage(element.src, "Anonymous");
+  const [width, height] = scale(image, canvas);
 
   useEffect(() => {
     if (isSelected) {
@@ -22,8 +31,9 @@ const Element = ({ isSelected, onSelect, onChange, element, ...selectedProps }) 
         id={element.id}
         x={element.x}
         y={element.y}
-        offsetX={image ? image.width / 2 : 0}
-        offsetY={image ? image.height / 2 : 0}
+        size={{ width: width, height: height }}
+        offsetX={width / 2}
+        offsetY={height / 2}
         isDragging={element.isDragging}
         draggable
         shadowColor="black"

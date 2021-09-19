@@ -23,3 +23,16 @@ export const goBackward = (elements, setElements, index) => () => {
     setElements(all);
   }
 };
+
+export const scale = (image, stage) => {
+  if (image == undefined) return [0, 0];
+
+  const width = image.width;
+  const widthRatio = width / (stage.current.width() - 40);
+  const height = image.height;
+  const heightRatio = height / (stage.current.height() - 40);
+
+  const ratio = Math.max(1, heightRatio, widthRatio);
+
+  return [width / ratio, height / ratio];
+};

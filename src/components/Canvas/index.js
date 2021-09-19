@@ -52,6 +52,7 @@ const Canvas = ({ dragUrl }) => {
             <Element
               key={element.id}
               id={element.id}
+              canvas={stageRef}
               element={element}
               isSelected={element.id === selectedId}
               onSelect={() => {
