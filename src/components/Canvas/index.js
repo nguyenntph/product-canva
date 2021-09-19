@@ -8,6 +8,10 @@ const Canvas = ({ dragUrl }) => {
   const stageRef = useRef();
   const [elements, setElements] = useState([]);
   const [selectedId, selectShape] = useState(null);
+  const [canvasSize, setCanvasSize] = useState({
+    width: 700,
+    height: 700
+  });
 
   const checkDeselect = e => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -38,11 +42,16 @@ const Canvas = ({ dragUrl }) => {
         e.preventDefault();
       }}
     >
-      <Header stageRef={stageRef} />
+      <Header
+        stageRef={stageRef}
+        canvasSize={canvasSize}
+        setCanvasSize={setCanvasSize}
+        reset={() => selectShape(null)}
+      />
       <Stage
-        width={window.innerWidth}
-        height={window.innerHeight - 80}
-        className="flex overflow-hidden mx-4 my-2 bg-white"
+        width={canvasSize["width"]}
+        height={canvasSize["height"]}
+        className="mx-4 my-2"
         ref={stageRef}
         onMouseDown={checkDeselect}
         onTouchStart={checkDeselect}

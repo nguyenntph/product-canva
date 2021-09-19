@@ -14,6 +14,7 @@ import {
   faPaperPlane,
   faFile
 } from "@fortawesome/free-solid-svg-icons";
+import "./index.css";
 
 library.add(
   faEdit,
