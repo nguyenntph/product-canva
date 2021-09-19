@@ -36,11 +36,11 @@ const Element = ({
         offsetY={height / 2}
         isDragging={element.isDragging}
         draggable
-        shadowColor="black"
-        shadowBlur={10}
-        shadowOpacity={0.6}
-        shadowOffsetX={element.isDragging ? 10 : 5}
-        shadowOffsetY={element.isDragging ? 10 : 5}
+        // shadowColor="black"
+        // shadowBlur={10}
+        // shadowOpacity={0.6}
+        // shadowOffsetX={element.isDragging ? 10 : 5}
+        // shadowOffsetY={element.isDragging ? 10 : 5}
         scaleX={element.isDragging ? 1.2 : 1}
         scaleY={element.isDragging ? 1.2 : 1}
         onClick={onSelect}
