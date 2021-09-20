@@ -3,8 +3,8 @@ import ExportButton from "./ExportButton";
 
 const Header = ({ stageRef, canvasSize, setCanvasSize, reset }) => (
   <div className="flex justify-between px-4 pt-3">
-    <div className="text-left"></div>
-    <div className="text-center flex">
+    <div className="text-left flex-1"></div>
+    <div className="flex-1 justify-center flex">
       <input
         className="shadow appearance-none border rounded w-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mx-2"
         type="number"
@@ -26,7 +26,7 @@ const Header = ({ stageRef, canvasSize, setCanvasSize, reset }) => (
         }}
       />
     </div>
-    <div className="text-right">
+    <div className="flex-1 text-right">
       <ExportButton stageRef={stageRef} reset={reset} />
     </div>
   </div>
