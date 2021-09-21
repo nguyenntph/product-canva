@@ -54,10 +54,9 @@ const Canvas = ({ dragUrl }) => {
       onDragOver={e => {
         e.preventDefault();
       }}
-      ref={containerRef}
     >
       <Header
-        stageRef={stageRef}
+        stageRef={containerRef}
         canvasSize={canvasSize}
         setCanvasSize={setCanvasSize}
         reset={() => selectShape(null)}
@@ -69,7 +68,12 @@ const Canvas = ({ dragUrl }) => {
         onMouseDown={checkDeselect}
         onTouchStart={checkDeselect}
       >
-        <Layer backgroundColor="white">
+        <Layer
+          backgroundColor="white"
+          width={canvasSize["width"]}
+          ref={containerRef}
+          height={canvasSize["height"]}
+        >
           <Group
             x={(window.innerWidth * (5 / 6) - canvasSize["width"]) / 2}
             y={7}
@@ -116,6 +120,8 @@ const Canvas = ({ dragUrl }) => {
               />
             ))}
           </Group>
+        </Layer>
+        <Layer width={canvasSize["width"]} height={canvasSize["height"]}>
           {selectedId != null && (
             <ElementMenu
               transformRef={elementRef}
