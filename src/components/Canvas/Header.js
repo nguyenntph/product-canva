@@ -27,7 +27,7 @@ const Header = ({ stageRef, canvasSize, setCanvasSize, reset }) => (
       />
     </div>
     <div className="flex-1 text-right">
-      <ExportButton stageRef={stageRef} reset={reset} />
+      <ExportButton stageRef={stageRef} />
     </div>
   </div>
 );

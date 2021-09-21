@@ -59,7 +59,6 @@ const Canvas = ({ dragUrl }) => {
         stageRef={containerRef}
         canvasSize={canvasSize}
         setCanvasSize={setCanvasSize}
-        reset={() => selectShape(null)}
       />
       <Stage
         width={window.innerWidth}
