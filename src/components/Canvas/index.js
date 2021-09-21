@@ -1,21 +1,31 @@
 import React, { useState, useRef } from "react";
-import { Stage, Layer } from "react-konva";
+import { Stage, Layer, Group, Rect } from "react-konva";
 import Element from "./Element";
 import Header from "./Header";
+import ElementMenu from "./ElementMenu";
 import { onDelete, goForward, goBackward } from "./helpers";
 
 const Canvas = ({ dragUrl }) => {
   const stageRef = useRef();
+  const clipRef = useRef();
+  const containerRef = useRef();
+  const elementRef = useRef();
   const [elements, setElements] = useState([]);
   const [selectedId, selectShape] = useState(null);
+  const [selectedIndex, setIndex] = useState(null);
   const [canvasSize, setCanvasSize] = useState({
     width: 700,
     height: 700
   });
+  const reset = () => {
+    setIndex(null);
+    selectShape(null);
+  };
 
   const checkDeselect = e => {
     const clickedOnEmpty = e.target === e.target.getStage();
-    if (clickedOnEmpty) {
+    const clickOnBackground = e.target.attrs.id == "background";
+    if (clickedOnEmpty || clickOnBackground) {
       selectShape(null);
     }
   };
@@ -26,7 +36,10 @@ const Canvas = ({ dragUrl }) => {
     setElements(
       elements.concat([
         {
-          ...stageRef.current.getPointerPosition(),
+          x:
+            stageRef.current.getPointerPosition().x -
+            (window.innerWidth * (5 / 6) - canvasSize["width"]) / 2,
+          y: stageRef.current.getPointerPosition().y - 7,
           src: dragUrl.current.src,
           id: Date.now().toString(),
           isDragging: false
@@ -41,6 +54,7 @@ const Canvas = ({ dragUrl }) => {
       onDragOver={e => {
         e.preventDefault();
       }}
+      ref={containerRef}
     >
       <Header
         stageRef={stageRef}
@@ -49,34 +63,67 @@ const Canvas = ({ dragUrl }) => {
         reset={() => selectShape(null)}
       />
       <Stage
-        width={canvasSize["width"]}
-        height={canvasSize["height"]}
-        className="mx-4 my-2"
+        width={window.innerWidth}
+        height={window.innerHeight}
         ref={stageRef}
         onMouseDown={checkDeselect}
         onTouchStart={checkDeselect}
       >
-        <Layer>
-          {elements.map((element, index) => (
-            <Element
-              key={element.id}
-              id={element.id}
-              canvas={stageRef}
-              element={element}
-              isSelected={element.id === selectedId}
+        <Layer backgroundColor="white">
+          <Group
+            x={(window.innerWidth * (5 / 6) - canvasSize["width"]) / 2}
+            y={7}
+            clip={{
+              x: 0,
+              y: 0,
+              width: canvasSize["width"],
+              height: canvasSize["height"]
+            }}
+            fill="white"
+            ref={clipRef}
+          >
+            <Rect
+              id="background"
+              x={0}
+              y={0}
+              width={canvasSize["width"]}
+              height={canvasSize["height"]}
+              fill="white"
               onSelect={() => {
-                selectShape(element.id);
+                alert(1);
+                selectShape(null);
+                setIndex(null);
               }}
-              onChange={newAttrs => {
-                const all = elements.slice();
-                all[index] = newAttrs;
-                setElements(all);
-              }}
-              onDelete={onDelete(elements, setElements, index)}
-              goForward={goForward(elements, setElements, index)}
-              goBackward={goBackward(elements, setElements, index)}
+            ></Rect>
+            {elements.map((element, index) => (
+              <Element
+                elementRef={elementRef}
+                canvasSize={canvasSize}
+                key={element.id}
+                id={element.id}
+                canvas={clipRef}
+                element={element}
+                isSelected={element.id === selectedId}
+                onSelect={() => {
+                  selectShape(element.id);
+                  setIndex(index);
+                }}
+                onChange={newAttrs => {
+                  const all = elements.slice();
+                  all[index] = newAttrs;
+                  setElements(all);
+                }}
+              />
+            ))}
+          </Group>
+          {selectedId != null && (
+            <ElementMenu
+              transformRef={elementRef}
+              onDelete={onDelete(elements, setElements, selectedIndex, reset)}
+              goForward={goForward(elements, setElements, selectedIndex, setIndex)}
+              goBackward={goBackward(elements, setElements, selectedIndex, setIndex)}
             />
-          ))}
+          )}
         </Layer>
       </Stage>
     </div>

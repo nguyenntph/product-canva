@@ -1,26 +1,17 @@
 import React, { useRef, useEffect, Fragment } from "react";
 import { Image } from "react-konva";
 import useImage from "use-image";
-import ElementMenu from "./ElementMenu";
 import { scale } from "./helpers";
 
-const Element = ({
-  isSelected,
-  onSelect,
-  onChange,
-  element,
-  canvas,
-  ...selectedProps
-}) => {
+const Element = ({ isSelected, onSelect, onChange, element, canvas, elementRef }) => {
   const shapeRef = useRef();
-  const trRef = useRef();
   const [image] = useImage(element.src, "Anonymous");
   const [width, height] = scale(image, canvas);
 
   useEffect(() => {
     if (isSelected) {
-      trRef.current.nodes([shapeRef.current]);
-      trRef.current.getLayer().batchDraw();
+      elementRef.current.nodes([shapeRef.current]);
+      elementRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
 
@@ -36,11 +27,6 @@ const Element = ({
         offsetY={height / 2}
         isDragging={element.isDragging}
         draggable
-        // shadowColor="black"
-        // shadowBlur={10}
-        // shadowOpacity={0.6}
-        // shadowOffsetX={element.isDragging ? 10 : 5}
-        // shadowOffsetY={element.isDragging ? 10 : 5}
         scaleX={element.isDragging ? 1.2 : 1}
         scaleY={element.isDragging ? 1.2 : 1}
         onClick={onSelect}
@@ -67,7 +53,6 @@ const Element = ({
           });
         }}
       />
-      {isSelected && <ElementMenu transformRef={trRef} {...selectedProps} />}
     </Fragment>
   );
 };
