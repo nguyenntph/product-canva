@@ -55,11 +55,7 @@ const Canvas = ({ dragUrl }) => {
         e.preventDefault();
       }}
     >
-      <Header
-        stageRef={containerRef}
-        canvasSize={canvasSize}
-        setCanvasSize={setCanvasSize}
-      />
+      <Header stageRef={clipRef} canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
       <Stage
         width={window.innerWidth}
         height={window.innerHeight}
@@ -70,12 +66,14 @@ const Canvas = ({ dragUrl }) => {
         <Layer
           backgroundColor="white"
           width={canvasSize["width"]}
-          ref={containerRef}
           height={canvasSize["height"]}
+          ref={containerRef}
+          x={(window.innerWidth * (5 / 6) - canvasSize["width"]) / 2}
+          y={7}
         >
           <Group
-            x={(window.innerWidth * (5 / 6) - canvasSize["width"]) / 2}
-            y={7}
+            width={canvasSize["width"]}
+            height={canvasSize["height"]}
             clip={{
               x: 0,
               y: 0,
@@ -93,7 +91,6 @@ const Canvas = ({ dragUrl }) => {
               height={canvasSize["height"]}
               fill="white"
               onSelect={() => {
-                alert(1);
                 selectShape(null);
                 setIndex(null);
               }}

@@ -11,7 +11,13 @@ const ExportButton = ({ stageRef }) => {
   };
 
   const generateImage = () => {
-    const uri = stageRef.current.toDataURL();
+    const ref = stageRef.current;
+    const uri = ref.toDataURL({
+      x: ref.parent.attrs.x,
+      y: ref.parent.attrs.y,
+      width: ref.attrs.width,
+      height: ref.attrs.height
+    });
     downloadURI(uri, "portfo-canva-" + Date.now() + ".png");
   };
 
