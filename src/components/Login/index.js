@@ -2,10 +2,22 @@ import React from "react";
 import { GoogleLogin } from "react-google-login";
 import { refreshTokenSetup } from "./refreshToken";
 import { CLIENT_ID } from "../../constants";
+import API from "../../helpers/api";
 
 const Login = ({ saveSession }) => {
+  const api = new API();
+
+  const sendUserInfo = ({ name, email }) => {
+    api
+      .createUser({ user: { name: name, email: email } })
+      .then(() => console.log("OK"))
+      .catch(err => console.log(err));
+  };
+
   const success = response => {
-    saveSession(response.profileObj);
+    const profile = response.profileObj;
+    saveSession(profile);
+    sendUserInfo({ name: profile.name, email: profile.email });
     refreshTokenSetup(response, saveSession);
   };
   const fail = response => {
