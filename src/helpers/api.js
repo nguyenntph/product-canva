@@ -27,7 +27,7 @@ class API {
   };
 
   createUser = params => {
-    return this.init().post("/users", { params: params });
+    return this.init().post("/users", params);
   };
 }
 
