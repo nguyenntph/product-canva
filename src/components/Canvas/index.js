@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { Stage, Layer, Group, Rect } from "react-konva";
 import Element from "./Element";
 import Header from "./Header";
+import ResizeButton from "./ResizeButton";
 import ElementMenu from "./ElementMenu";
 import { onDelete, goForward, goBackward } from "./helpers";
 
@@ -46,6 +47,7 @@ const Canvas = ({ dragUrl, size }) => {
 
   return (
     <div
+      className="relative"
       onDrop={dropNewElement}
       onDragOver={e => {
         e.preventDefault();
@@ -66,6 +68,8 @@ const Canvas = ({ dragUrl, size }) => {
           ref={containerRef}
           x={(window.innerWidth * (5 / 6) - size["width"]) / 2}
           y={7}
+          scaleX={0.5}
+          scaleY={0.5}
         >
           <Group
             width={size["width"]}
@@ -124,6 +128,10 @@ const Canvas = ({ dragUrl, size }) => {
           )}
         </Layer>
       </Stage>
+
+      <div className="absolute bottom-20 left-8">
+        <ResizeButton />
+      </div>
     </div>
   );
 };
