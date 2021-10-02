@@ -1,31 +1,44 @@
 import React, { useState } from "react";
 import ElementList from "./ElementList";
 import Uploader from "../Uploader";
-import Background from "./assets/background.svg";
-import Element from "./assets/element.svg";
-import Upload from "./assets/upload.svg";
-import Size from "./assets/size.svg";
+import Shapes from "../Shapes";
+import Text from "../Text";
+import Size from "../Size";
+import BackgroundLogo from "./assets/background.svg";
+import ElementLogo from "./assets/element.svg";
+import UploadLogo from "./assets/upload.svg";
+import SizeLogo from "./assets/size.svg";
+import ShapeLogo from "./assets/shapes.svg";
+import TextLogo from "./assets/text.svg";
 
 const categories = [
   {
     name: "Background",
-    icon: Background
+    icon: BackgroundLogo
   },
   {
     name: "Elements",
-    icon: Element
+    icon: ElementLogo
   },
   {
     name: "Upload",
-    icon: Upload
+    icon: UploadLogo
+  },
+  {
+    name: "Text",
+    icon: TextLogo
+  },
+  {
+    name: "Shapes",
+    icon: ShapeLogo
   },
   {
     name: "Size",
-    icon: Size
+    icon: SizeLogo
   }
 ];
 
-const Sidebar = ({ dragUrl }) => {
+const Sidebar = ({ dragUrl, ...props }) => {
   const [category, selectCategory] = useState("Elements");
   const [uploads, uploadNewImage] = useState([]);
 
@@ -54,7 +67,9 @@ const Sidebar = ({ dragUrl }) => {
         {category == "Background" && (
           <ElementList dragUrl={dragUrl} term={"background"} />
         )}
-        {category == "Size" && <img src={Size} />}
+        {category == "Size" && <Size {...props} />}
+        {category == "Shapes" && <Shapes />}
+        {category == "Text" && <Text />}
       </div>
     </div>
   );
