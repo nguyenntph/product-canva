@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
+import App from "./pages/Home";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faEdit,
