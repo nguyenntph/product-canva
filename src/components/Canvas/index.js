@@ -5,7 +5,7 @@ import Header from "./Header";
 import ElementMenu from "./ElementMenu";
 import { onDelete, goForward, goBackward } from "./helpers";
 
-const Canvas = ({ dragUrl }) => {
+const Canvas = ({ dragUrl, size }) => {
   const stageRef = useRef();
   const clipRef = useRef();
   const containerRef = useRef();
@@ -13,10 +13,6 @@ const Canvas = ({ dragUrl }) => {
   const [elements, setElements] = useState([]);
   const [selectedId, selectShape] = useState(null);
   const [selectedIndex, setIndex] = useState(null);
-  const [canvasSize, setCanvasSize] = useState({
-    width: 700,
-    height: 700
-  });
   const reset = () => {
     setIndex(null);
     selectShape(null);
@@ -38,7 +34,7 @@ const Canvas = ({ dragUrl }) => {
         {
           x:
             stageRef.current.getPointerPosition().x -
-            (window.innerWidth * (5 / 6) - canvasSize["width"]) / 2,
+            (window.innerWidth * (5 / 6) - size["width"]) / 2,
           y: stageRef.current.getPointerPosition().y - 7,
           src: dragUrl.current.src,
           id: Date.now().toString(),
@@ -55,7 +51,7 @@ const Canvas = ({ dragUrl }) => {
         e.preventDefault();
       }}
     >
-      <Header stageRef={clipRef} canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
+      <Header stageRef={clipRef} />
       <Stage
         width={window.innerWidth}
         height={window.innerHeight}
@@ -65,20 +61,20 @@ const Canvas = ({ dragUrl }) => {
       >
         <Layer
           backgroundColor="white"
-          width={canvasSize["width"]}
-          height={canvasSize["height"]}
+          width={size["width"]}
+          height={size["height"]}
           ref={containerRef}
-          x={(window.innerWidth * (5 / 6) - canvasSize["width"]) / 2}
+          x={(window.innerWidth * (5 / 6) - size["width"]) / 2}
           y={7}
         >
           <Group
-            width={canvasSize["width"]}
-            height={canvasSize["height"]}
+            width={size["width"]}
+            height={size["height"]}
             clip={{
               x: 0,
               y: 0,
-              width: canvasSize["width"],
-              height: canvasSize["height"]
+              width: size["width"],
+              height: size["height"]
             }}
             fill="white"
             ref={clipRef}
@@ -87,8 +83,8 @@ const Canvas = ({ dragUrl }) => {
               id="background"
               x={0}
               y={0}
-              width={canvasSize["width"]}
-              height={canvasSize["height"]}
+              width={size["width"]}
+              height={size["height"]}
               fill="white"
               onSelect={() => {
                 selectShape(null);
@@ -98,7 +94,7 @@ const Canvas = ({ dragUrl }) => {
             {elements.map((element, index) => (
               <Element
                 elementRef={elementRef}
-                canvasSize={canvasSize}
+                size={size}
                 key={element.id}
                 id={element.id}
                 canvas={clipRef}
@@ -117,7 +113,7 @@ const Canvas = ({ dragUrl }) => {
             ))}
           </Group>
         </Layer>
-        <Layer width={canvasSize["width"]} height={canvasSize["height"]}>
+        <Layer width={size["width"]} height={size["height"]}>
           {selectedId != null && (
             <ElementMenu
               transformRef={elementRef}
