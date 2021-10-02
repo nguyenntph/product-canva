@@ -1,5 +1,5 @@
 import React from "react";
-import data from "../../../data/elements.json";
+import defaultData from "../../../data/elements.json";
 import Element from "./Element";
 
 const filter = (data, term) => {
@@ -10,7 +10,7 @@ const filter = (data, term) => {
   return filtered;
 };
 
-const ElementList = ({ dragUrl, term }) => (
+const ElementList = ({ dragUrl, term, data = defaultData }) => (
   <div className="overflow-y-auto h-full pt-0">
     {filter(data, term).map(element => (
       <Element

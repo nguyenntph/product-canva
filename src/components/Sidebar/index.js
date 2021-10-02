@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ElementList from "./ElementList";
+import Uploader from "../Uploader";
 import Background from "./assets/background.svg";
 import Element from "./assets/element.svg";
 import Upload from "./assets/upload.svg";
@@ -26,7 +27,7 @@ const categories = [
 
 const Sidebar = ({ dragUrl }) => {
   const [category, selectCategory] = useState("Elements");
-  console.log(category);
+  const [uploads, uploadNewImage] = useState([]);
 
   return (
     <div className="h-full flex">
@@ -47,7 +48,9 @@ const Sidebar = ({ dragUrl }) => {
 
       <div className="flex-1 border-r">
         {category == "Elements" && <ElementList dragUrl={dragUrl} term={""} />}
-        {category == "Upload" && <img src={Upload} />}
+        {category == "Upload" && (
+          <Uploader data={uploads} upload={uploadNewImage} dragUrl={dragUrl} term={""} />
+        )}
         {category == "Background" && (
           <ElementList dragUrl={dragUrl} term={"background"} />
         )}
