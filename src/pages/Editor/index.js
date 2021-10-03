@@ -21,7 +21,11 @@ const Editor = ({ name, saveSession }) => {
       </div>
       <div className="flex h-screen overflow-hidden">
         <div className="w-1/4 border-r">
-          <Sidebar dragUrl={dragUrl} canvasSize={canvasSize} setCanvasSize={setCanvasSize}/>
+          <Sidebar
+            dragUrl={dragUrl}
+            canvasSize={canvasSize}
+            setCanvasSize={setCanvasSize}
+          />
         </div>
         <div className="w-3/4 bg-gray-600 h-screen">
           <Canvas dragUrl={dragUrl} size={canvasSize} />

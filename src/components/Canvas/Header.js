@@ -1,12 +1,12 @@
 import React from "react";
 import ExportButton from "./ExportButton";
 
-const Header = ({ stageRef }) => (
-  <div className="flex justify-between px-4 pt-3">
+const Header = props => (
+  <div className="flex justify-between px-4 py-2 bg-white border-b">
     <div className="text-left flex-1"></div>
     <div className="flex-1 justify-center flex"></div>
     <div className="flex-1 text-right">
-      <ExportButton stageRef={stageRef} />
+      <ExportButton {...props} />
     </div>
   </div>
 );

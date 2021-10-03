@@ -9,11 +9,11 @@ import { onDelete, goForward, goBackward } from "./helpers";
 const Canvas = ({ dragUrl, size }) => {
   const stageRef = useRef();
   const clipRef = useRef();
-  const containerRef = useRef();
   const elementRef = useRef();
   const [elements, setElements] = useState([]);
   const [selectedId, selectShape] = useState(null);
   const [selectedIndex, setIndex] = useState(null);
+  const [scale, setScale] = useState(0.5);
   const reset = () => {
     setIndex(null);
     selectShape(null);
@@ -35,8 +35,10 @@ const Canvas = ({ dragUrl, size }) => {
         {
           x:
             stageRef.current.getPointerPosition().x -
-            (window.innerWidth * (5 / 6) - size["width"]) / 2,
-          y: stageRef.current.getPointerPosition().y - 7,
+            (window.innerWidth * (3 / 4) - size["width"]) / 2,
+          y:
+            stageRef.current.getPointerPosition().y -
+            (window.innerHeight - size["height"] * scale) / 2,
           src: dragUrl.current.src,
           id: Date.now().toString(),
           isDragging: false
@@ -47,90 +49,91 @@ const Canvas = ({ dragUrl, size }) => {
 
   return (
     <div
-      className="relative"
+      className="relative flex flex-col w-full h-full"
       onDrop={dropNewElement}
       onDragOver={e => {
         e.preventDefault();
       }}
     >
-      <Header stageRef={clipRef} />
-      <Stage
-        width={window.innerWidth}
-        height={window.innerHeight}
-        ref={stageRef}
-        onMouseDown={checkDeselect}
-        onTouchStart={checkDeselect}
-      >
-        <Layer
-          backgroundColor="white"
-          width={size["width"]}
-          height={size["height"]}
-          ref={containerRef}
-          x={(window.innerWidth * (5 / 6) - size["width"]) / 2}
-          y={7}
-          scaleX={0.5}
-          scaleY={0.5}
+      <Header stageRef={clipRef} scale={scale} />
+      <div className="overflow-scroll">
+        <Stage
+          width={window.innerWidth * (3 / 4)}
+          height={window.innerHeight - 57}
+          ref={stageRef}
+          onMouseDown={checkDeselect}
+          onTouchStart={checkDeselect}
         >
-          <Group
+          <Layer
+            backgroundColor="white"
             width={size["width"]}
             height={size["height"]}
-            clip={{
-              x: 0,
-              y: 0,
-              width: size["width"],
-              height: size["height"]
-            }}
-            fill="white"
-            ref={clipRef}
+            x={(window.innerWidth * (3 / 4) - size["width"] * scale) / 2}
+            y={(window.innerHeight - size["height"] * scale) / 2}
+            scaleX={scale}
+            scaleY={scale}
           >
-            <Rect
-              id="background"
-              x={0}
-              y={0}
+            <Group
               width={size["width"]}
               height={size["height"]}
-              fill="white"
-              onSelect={() => {
-                selectShape(null);
-                setIndex(null);
+              clip={{
+                x: 0,
+                y: 0,
+                width: size["width"],
+                height: size["height"]
               }}
-            ></Rect>
-            {elements.map((element, index) => (
-              <Element
-                elementRef={elementRef}
-                size={size}
-                key={element.id}
-                id={element.id}
-                canvas={clipRef}
-                element={element}
-                isSelected={element.id === selectedId}
+              fill="white"
+              ref={clipRef}
+            >
+              <Rect
+                id="background"
+                x={0}
+                y={0}
+                width={size["width"]}
+                height={size["height"]}
+                fill="white"
                 onSelect={() => {
-                  selectShape(element.id);
-                  setIndex(index);
+                  selectShape(null);
+                  setIndex(null);
                 }}
-                onChange={newAttrs => {
-                  const all = elements.slice();
-                  all[index] = newAttrs;
-                  setElements(all);
-                }}
+              ></Rect>
+              {elements.map((element, index) => (
+                <Element
+                  elementRef={elementRef}
+                  size={size}
+                  key={element.id}
+                  id={element.id}
+                  canvas={clipRef}
+                  element={element}
+                  isSelected={element.id === selectedId}
+                  onSelect={() => {
+                    selectShape(element.id);
+                    setIndex(index);
+                  }}
+                  onChange={newAttrs => {
+                    const all = elements.slice();
+                    all[index] = newAttrs;
+                    setElements(all);
+                  }}
+                />
+              ))}
+            </Group>
+          </Layer>
+          <Layer width={size["width"]} height={size["height"]}>
+            {selectedId != null && (
+              <ElementMenu
+                transformRef={elementRef}
+                onDelete={onDelete(elements, setElements, selectedIndex, reset)}
+                goForward={goForward(elements, setElements, selectedIndex, setIndex)}
+                goBackward={goBackward(elements, setElements, selectedIndex, setIndex)}
               />
-            ))}
-          </Group>
-        </Layer>
-        <Layer width={size["width"]} height={size["height"]}>
-          {selectedId != null && (
-            <ElementMenu
-              transformRef={elementRef}
-              onDelete={onDelete(elements, setElements, selectedIndex, reset)}
-              goForward={goForward(elements, setElements, selectedIndex, setIndex)}
-              goBackward={goBackward(elements, setElements, selectedIndex, setIndex)}
-            />
-          )}
-        </Layer>
-      </Stage>
+            )}
+          </Layer>
+        </Stage>
+      </div>
 
-      <div className="absolute bottom-20 left-8">
-        <ResizeButton />
+      <div className="absolute bottom-4 left-8">
+        <ResizeButton scale={scale} setScale={setScale} />
       </div>
     </div>
   );

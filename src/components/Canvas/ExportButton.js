@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExportButton = ({ stageRef }) => {
+const ExportButton = ({ stageRef, scale }) => {
   const downloadURI = (uri, name) => {
     var link = document.createElement("a");
     link.download = name;

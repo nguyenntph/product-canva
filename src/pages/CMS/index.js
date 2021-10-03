@@ -14,7 +14,7 @@ const Editor = ({ name, saveSession }) => {
           <Logout saveSession={saveSession} />
         </div>
       </div>
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex h-screen">
         <div className="w-1/4 border-r">
           <Sidebar dragUrl={dragUrl} />
         </div>
