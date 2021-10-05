@@ -16,6 +16,14 @@ export const goForward = (elements, setElements, index, setIndex) => () => {
   }
 };
 
+export const goToFront = (elements, setElements, index, setIndex) => () => {
+  const all = elements.slice();
+  const element = all.splice(index, 1);
+  all.push(element[0]);
+  setIndex(all.length - 1);
+  setElements(all);
+};
+
 export const goBackward = (elements, setElements, index, setIndex) => () => {
   if (index > 0) {
     const all = elements.slice();
@@ -25,6 +33,14 @@ export const goBackward = (elements, setElements, index, setIndex) => () => {
     setElements(all);
     setIndex(index - 1);
   }
+};
+
+export const goToBack = (elements, setElements, index, setIndex) => () => {
+  const all = elements.slice();
+  const element = all.splice(index, 1);
+  all.unshift(element[0]);
+  setIndex(0);
+  setElements(all);
 };
 
 export const scale = (image, stage) => {

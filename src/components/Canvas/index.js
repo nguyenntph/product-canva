@@ -4,7 +4,6 @@ import Element from "./Element";
 import Header from "./Header";
 import ResizeButton from "./ResizeButton";
 import ElementMenu from "./ElementMenu";
-import { onDelete, goForward, goBackward } from "./helpers";
 
 const Canvas = ({ dragUrl, size }) => {
   const stageRef = useRef();
@@ -55,7 +54,15 @@ const Canvas = ({ dragUrl, size }) => {
         e.preventDefault();
       }}
     >
-      <Header stageRef={clipRef} scale={scale} />
+      <Header
+        reset={reset}
+        stageRef={clipRef}
+        scale={scale}
+        elements={elements}
+        setElements={setElements}
+        selectedIndex={selectedIndex}
+        setIndex={setIndex}
+      />
       <div className="overflow-scroll">
         <Stage
           width={window.innerWidth * (3 / 4)}
@@ -120,14 +127,7 @@ const Canvas = ({ dragUrl, size }) => {
             </Group>
           </Layer>
           <Layer width={size["width"]} height={size["height"]}>
-            {selectedId != null && (
-              <ElementMenu
-                transformRef={elementRef}
-                onDelete={onDelete(elements, setElements, selectedIndex, reset)}
-                goForward={goForward(elements, setElements, selectedIndex, setIndex)}
-                goBackward={goBackward(elements, setElements, selectedIndex, setIndex)}
-              />
-            )}
+            {selectedId != null && <ElementMenu transformRef={elementRef} />}
           </Layer>
         </Stage>
       </div>
