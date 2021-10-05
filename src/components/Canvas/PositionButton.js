@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { goForward, goBackward, goToFront, goToBack } from "./helpers";
 
-const PositionButton = ({ elements, setElements, selectedIndex, setIndex }) => {
+const PositionButton = ({ disabled, elements, setElements, selectedIndex, setIndex }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -9,10 +9,12 @@ const PositionButton = ({ elements, setElements, selectedIndex, setIndex }) => {
       <div>
         <button
           type="button"
-          className="inline-flex justify-center w-full rounded-md px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className={`inline-flex justify-center w-full rounded-md px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed ${disabled &&
+            "cursor-not-allowed"}`}
           id="menu-button"
           aria-expanded="true"
           aria-haspopup="true"
+          disabled={disabled}
           onClick={() => setOpen(!open)}
         >
           Position
@@ -33,7 +35,7 @@ const PositionButton = ({ elements, setElements, selectedIndex, setIndex }) => {
       </div>
 
       <div
-        className={`z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${!open &&
+        className={`z-50 origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ${!open &&
           "hidden"}`}
         role="menu"
         aria-orientation="vertical"
@@ -41,42 +43,42 @@ const PositionButton = ({ elements, setElements, selectedIndex, setIndex }) => {
         tabIndex="-1"
       >
         <div className="py-1" role="none">
-          <a
+          <button
             onClick={goToFront(elements, setElements, selectedIndex, setIndex)}
-            className="text-gray-700 block px-2 py-1 text-sm"
+            className="w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 text-left"
             role="menuitem"
             tabIndex="-1"
             id="menu-item-0"
           >
             Forward
-          </a>
-          <a
+          </button>
+          <button
             onClick={goForward(elements, setElements, selectedIndex, setIndex)}
-            className="text-gray-700 block px-2 py-1 text-sm"
+            className="w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 text-left"
             role="menuitem"
             tabIndex="-1"
             id="menu-item-1"
           >
             Up
-          </a>
-          <a
+          </button>
+          <button
             onClick={goBackward(elements, setElements, selectedIndex, setIndex)}
-            className="text-gray-700 block px-2 py-1 text-sm"
+            className="w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 text-left"
             role="menuitem"
             tabIndex="-1"
             id="menu-item-2"
           >
             Down
-          </a>
-          <a
+          </button>
+          <button
             onClick={goToBack(elements, setElements, selectedIndex, setIndex)}
-            className="text-gray-700 block px-2 py-1 text-sm"
+            className="w-full text-gray-700 block px-4 py-2 text-sm hover:bg-gray-50 text-left"
             role="menuitem"
             tabIndex="-1"
             id="menu-item-2"
           >
             Bottom
-          </a>
+          </button>
         </div>
       </div>
     </div>
