@@ -5,6 +5,12 @@ export const onDelete = (elements, setElements, index, reset) => () => {
   reset();
 };
 
+export const updateOpacity = (elements, setElements, index, opacity) => {
+  const all = elements.slice();
+  all[index]["opacity"] = opacity;
+  setElements(all);
+};
+
 export const goForward = (elements, setElements, index, setIndex) => () => {
   if (index < elements.length - 1) {
     const all = elements.slice();

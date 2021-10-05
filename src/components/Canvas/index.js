@@ -40,6 +40,7 @@ const Canvas = ({ dragUrl, size }) => {
             (window.innerHeight - size["height"] * scale) / 2,
           src: dragUrl.current.src,
           id: Date.now().toString(),
+          opacity: 1.0,
           isDragging: false
         }
       ])

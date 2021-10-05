@@ -1,6 +1,7 @@
 import React from "react";
 import ExportButton from "./ExportButton";
 import PositionButton from "./PositionButton";
+import OpacityButton from "./OpacityButton";
 import { onDelete } from "./helpers";
 
 const Header = ({ reset, ...props }) => {
@@ -8,9 +9,9 @@ const Header = ({ reset, ...props }) => {
   return (
     <div className="flex justify-between px-4 py-2 bg-white border-b">
       <div className="text-left flex-1"></div>
-      <div className="flex-1 justify-center flex"></div>
       <div className="flex-1 text-right">
         <PositionButton {...props} disabled={disabled} />
+        <OpacityButton {...props} disabled={disabled} />
         <button
           className={`px-4 py-2 ${disabled && "cursor-not-allowed"}`}
           onClick={onDelete(

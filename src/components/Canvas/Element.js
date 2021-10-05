@@ -3,7 +3,15 @@ import { Image } from "react-konva";
 import useImage from "use-image";
 import { scale } from "./helpers";
 
-const Element = ({ isSelected, onSelect, onChange, element, canvas, elementRef }) => {
+const Element = ({
+  isSelected,
+  onSelect,
+  onChange,
+  element,
+  canvas,
+  elementRef,
+  ...props
+}) => {
   const shapeRef = useRef();
   const [image] = useImage(element.src, "Anonymous");
   const [width, height] = scale(image, canvas);
@@ -18,6 +26,8 @@ const Element = ({ isSelected, onSelect, onChange, element, canvas, elementRef }
   return (
     <Fragment>
       <Image
+        {...props}
+        {...element}
         image={image}
         id={element.id}
         x={element.x}
